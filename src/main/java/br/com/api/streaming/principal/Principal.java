@@ -7,6 +7,8 @@ import br.com.api.streaming.model.Episodio;
 import br.com.api.streaming.service.ConsumoApi;
 import br.com.api.streaming.service.ConverteDados;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -65,6 +67,25 @@ public class Principal {
                     ).collect(Collectors.toList());
 
             episodios.forEach(System.out::println);
+
+            System.out.println("A partir de que ano você deseja ver os episódios? ");
+            var ano = leitura.nextInt();
+            leitura.nextLine();
+
+            LocalDate dataBusca = LocalDate.of(ano, 1, 1);
+
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            episodios.stream()
+                    .filter(e -> e.getLancamento().isAfter(dataBusca))
+                    .forEach(e -> System.out.println(
+                            "Temporada: " + e.getTemporada() +
+                                    " - Episódio: " + e.getNumero() +
+                                    " - Titulo: " + e.getTitulo() +
+                                    " - Avaliação: " + e.getAvaliacao() +
+                                    " - Lançamento: " + e.getLancamento().format(formatador)
+                    )
+            );
 
         } finally {
             leitura.close();
