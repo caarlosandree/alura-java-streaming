@@ -18,6 +18,7 @@ public class Principal {
     private IBuscaTituloService buscaTituloService = new BuscaTituloService();
     private IFiltroAnoService filtroAnoService = new FiltroAnoService();
     private IMapaAvaliacoesService mapaAvaliacoesService = new MapaAvaliacoesService();
+    private IEstatisticasService estatisticasService = new EstatisticasService();
 
     public void exibeMenu() {
         try {
@@ -45,6 +46,7 @@ public class Principal {
                 System.out.println("3 - Buscar episódio por trecho do título");
                 System.out.println("4 - Filtrar episódios por ano");
                 System.out.println("5 - Exibir mapa de avaliações por temporada");
+                System.out.println("6 - Exibir estatísticas de avaliações");
                 System.out.println("0 - Sair");
 
                 opcao = leitura.nextInt();
@@ -66,6 +68,7 @@ public class Principal {
                     }
                     case 5 -> mapaAvaliacoesService.obterMapaAvaliacoes(episodios)
                             .forEach((temporada, avaliacao) -> System.out.println("Temporada " + temporada + ": " + avaliacao));
+                    case 6 -> estatisticasService.exibirEstatisticas(episodios);
                     case 0 -> System.out.println("Saindo...");
                     default -> System.out.println("Opção inválida");
                 }
